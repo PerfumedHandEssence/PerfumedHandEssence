@@ -1,0 +1,41 @@
+//https://school.programmers.co.kr/learn/courses/30/lessons/178871
+//문제 : 달리기 경주
+
+#include <string>
+#include <vector>
+#include <map>
+
+
+using namespace std;
+
+vector<string> solution(vector<string> players, vector<string> callings) {
+    vector<string> answer;
+
+    map<string, int> m1;
+    map<int, string> m2;
+    int i = 1;
+    for (string var : players) {
+
+        m1.insert({ var,i });
+        m2.insert({ i,var });
+        i++;
+    }
+
+    for(string var : callings)
+    {
+        int idx = m1[var];
+        string front = m2[idx - 1];
+
+        m2[idx - 1] = var;
+        m2[idx] = front;
+        m1[var] = idx - 1;
+        m1[front] = idx;
+    }
+
+    for (auto c : m2)
+    {
+        answer.push_back(c.second);
+    }
+
+    return answer;
+}
